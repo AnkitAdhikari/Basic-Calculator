@@ -4,7 +4,13 @@ const operation = {
   "+": (a, b) => a + b,
   "-": (a, b) => a - b,
   x: (a, b) => a * b,
-  "/": (a, b) => a / b,
+  "/": (a, b) => {
+    if (b === 0) {
+      return (display.value = "can't divide");
+    } else {
+      return a / b;
+    }
+  },
 };
 let num1 = null;
 let num2 = null;
@@ -55,8 +61,7 @@ function calculatorLogic(input) {
     // performing opration based on operator we got and return and assign result to num1 for making next operation ready using num2
     if (input === "=" && num1 != null) {
       num2 = Number(display.value);
-      num1 = operate(op, num1, num2);
-      display.value = num1;
+      display.value = operate(op, num1, num2);
       num2 = null;
       num1 = null;
       return;
