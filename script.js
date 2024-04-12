@@ -1,11 +1,15 @@
 const display = document.querySelector(".display");
-const hello = document.querySelector("#hello");
+const button = document.querySelectorAll("button");
 const operation = {
   "+": (a, b) => a + b,
   "-": (a, b) => a - b,
   x: (a, b) => a * b,
   "/": (a, b) => {
     if (b === 0) {
+      button.forEach(btn => {
+        if (btn.value != 'AC')
+          btn.disabled = true;
+      })
       return (display.value = "can't divide");
     } else {
       return a / b;
@@ -33,11 +37,13 @@ function calculatorLogic(input) {
     if (input === ".") {
       if (display.value.includes(".")) return;
       display.value = display.value.concat(".");
-      console.log(display.value);
       return;
     }
     // resetting when AC in encountered and return
     if (input === "AC") {
+      button.forEach(btn => {
+        btn.disabled = false;
+      })
       num1 = null;
       num2 = null;
       op = null;
@@ -81,11 +87,9 @@ function calculatorLogic(input) {
   }
 }
 
-const button = document.querySelectorAll("button");
 button.forEach((el) =>
   el.addEventListener("click", (e) => {
     e.preventDefault();
-    console.log(el.value);
     calculatorLogic(el.value);
   })
 );
@@ -95,7 +99,6 @@ document.addEventListener("keydown", (e) => {
   // cons1ole.log(e.key);
   const regex = /^(?:[0-9\-+x.\b]|Backspace)$/;
   if (regex.test(e.key)) {
-    console.log(e.key);
     calculatorLogic(e.key);
   }
 });
